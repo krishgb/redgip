@@ -1,0 +1,8 @@
+export { default as Header } from './Header/Header'
+export { default as Footer } from './Footer/Footer'
+export { default as Body } from './Body/Body'
+export { default as Giphy } from './Giphy/Giphy'
+export { default as Reddit } from './Reddit/Reddit'
+export { default as SearchBar } from './SearchBar/SearchBar'
+export { default as GoTop } from './GoTop/GoTop'
+export { default as Box } from './Box/Box'

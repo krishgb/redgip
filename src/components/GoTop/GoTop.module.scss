@@ -1,0 +1,15 @@
+.gotop {
+  display: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  padding: 0.2rem 0.35rem;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1rem;
+  background: red;
+
+  &:hover {
+    transform: scale(1.3);
+  }
+}

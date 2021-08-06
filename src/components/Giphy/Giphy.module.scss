@@ -1,0 +1,35 @@
+.giphy {
+  display: grid;
+  gap: 1rem;
+
+  .search {
+    margin-left: 2rem;
+  }
+
+  .sectionHead {
+    background: white;
+    display: flex;
+    align-items: center;
+
+    .logo {
+      width: 10rem;
+      svg {
+        width: 100%;
+        height: 50px;
+      }
+    }
+  }
+  .imgAtxt {
+    width: 100%;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, 20rem);
+    justify-content: space-evenly;
+  }
+
+  @media (max-width: 500px) {
+    .logo {
+      width: 6rem;
+    }
+  }
+}
