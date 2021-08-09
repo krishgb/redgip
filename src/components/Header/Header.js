@@ -1,29 +1,35 @@
+import { Link } from 'react-router-dom'
 import classes from './Header.module.scss'
-import { useContext } from 'react'
-import { PageContext } from '../../App'
 
-const Header = ({ changePage }) => {
+const Header = () => {
 
-    const { page, current } = useContext(PageContext)
+    // const [current, setCurrent] = 
 
     const style = `
-        li[data-name=${current}]{
-            background: red;
-            color: white;
+        li[data-name=${window.location.pathname.slice(1).split('/')[0] || 'giphy'}]{
+            background: white;
+            color: black;
         }
     `
 
     return (
         <header className={classes.header}>
             <h1 className={classes.logo}>
-                RedGip
+                <span className={classes.red}>Red</span>
+                <span className={classes.tored}>Gip</span>
+                {/* RedGip */}
             </h1>
             <ul>
                 <style>
                     {style}
                 </style>
-                <li data-name={page.giphy} onClick={event => changePage(event.target.dataset.name)}>Giphy</li>
-                <li data-name={page.reddit} onClick={event => changePage(event.target.dataset.name)}>Reddit</li>
+                <Link to='/' style={{ textDecoration: 'none', color: "white" }}>
+                    <li data-name="giphy" >Giphy</li>
+                </Link>
+                <Link to='/reddit' style={{ textDecoration: 'none', color: "white" }}>
+
+                    <li data-name="reddit" >Reddit</li>
+                </Link>
             </ul>
         </header>
     )

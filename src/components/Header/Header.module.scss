@@ -3,12 +3,18 @@
   top: 0;
   width: 100%;
   z-index: 10000;
-  background: white;
+  background: #000;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   padding: 1rem 2rem;
-  box-shadow: 0px 1px 10px#ccc;
+  box-shadow: 0px 0px 7px #000;
+  color: white;
+
+  .logo{
+    width: 1rem;
+    cursor: pointer;
+  }
 
   ul {
     display: flex;
@@ -22,8 +28,19 @@
       border-radius: 3px;
 
       &:hover {
-        background: rgba(255, 0, 0, 0.8);
-        color: white;
+        background: white;
+        color: black;
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
+    & {
+      padding: 1rem;
+      font-size: 0.7rem;
+
+      ul li {
+        font-size: 1rem;
       }
     }
   }

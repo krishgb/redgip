@@ -1,20 +1,22 @@
 .giphy {
   display: grid;
   gap: 1rem;
+  background: inherit;
 
   .search {
     margin-left: 2rem;
   }
 
   .sectionHead {
-    background: white;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    width: 100%;
 
     .logo {
-      width: 10rem;
+      width: 8rem;
       svg {
-        width: 100%;
+        width: 95%;
         height: 50px;
       }
     }
@@ -27,9 +29,26 @@
     justify-content: space-evenly;
   }
 
-  @media (max-width: 500px) {
-    .logo {
-      width: 6rem;
+  .select {
+    margin: auto 0.8rem;
+    display: grid;
+    grid-auto-flow: column;
+    place-items: center;
+    justify-content: right;
+    gap: 0.5rem;
+    margin-top: -3.2rem;
+
+    @media (max-width: 620px) {
+      justify-content: center;
+      margin-top: auto;
+    }
+
+    p {
+      text-transform: uppercase;
+    }
+    select {
+      font-size: 1rem;
+      cursor: pointer;
     }
   }
 }

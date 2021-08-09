@@ -1,14 +1,9 @@
 import { useState, useReducer, useEffect, useCallback, useRef } from 'react'
 import { ReactComponent as Img } from '../../assests/giphy.svg'
-import classes from './Giphy.module.scss'
+import classes from '../Giphy/Giphy.module.scss'
 import { SearchBar, Box } from '..'
 
 import { getGifs } from '../api'
-
-const ACTIONS = {
-    getTrending: 'getTrending',
-    setTrending: 'setTrending'
-}
 
 const RATING = {
     G: 'g',
@@ -16,30 +11,36 @@ const RATING = {
     R: 'r'
 }
 
+const ACTIONS = {
+    getSearched: 'getSearched',
+    updateSearched: 'updateSearched'
+}
+
 
 const reducer = (state, action) => {
     const { gifs, count } = action.payload
     switch (action.type) {
-        case ACTIONS.getTrending:
+        case ACTIONS.getSearched:
             return {
-                gifs: gifs,
+                gifs: [...new Set(gifs)],
                 total: count
             }
-        case ACTIONS.setTrending:
+        case ACTIONS.updateSearched:
             return {
                 ...state,
-                gifs: state.gifs.concat(gifs)
+                gifs: [...new Set(state.gifs.concat(gifs))]
             }
         default:
             return state
     }
 }
 
-const Giphy = () => {
+const SearchedGifs = () => {
+
     const [state, dispatch] = useReducer(reducer, { gifs: [], total: 0 })
     const [loading, setloading] = useState(true)
     const [rating, setRating] = useState(RATING.G)
-
+    const [searched, setSearched] = useState(window.location.pathname.slice(1).split('/')[1])
     const observer = useRef()
 
     const refElement = useCallback(node => {
@@ -47,16 +48,22 @@ const Giphy = () => {
         if (observer.current) observer.current.disconnect()
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
-                gifs(ACTIONS.setTrending)
+                gifs(ACTIONS.updateSearched, searched, rating)
             }
         })
         if (node) observer.current.observe(node)
     }, [loading])
 
 
-    const gifs = async (reducerFunction, rating, length = state.gifs.length) => {
+    setInterval(() => {
+        const s = window.location.pathname.slice(1).split('/')[1]
+        if (s !== searched) setSearched(s)
+    }, 1000)
+
+    const gifs = async (reducerFunction, searched, rating) => {
         setloading(true)
-        const data = await getGifs(length, "", rating)
+        const length = reducerFunction === ACTIONS.getSearched ? 0 : state.gifs.length
+        const data = await getGifs(length, searched, rating)
         const gifs = data.gifs,
             total_count = data.total_count
         if (state.gifs.length === total_count) return
@@ -70,8 +77,8 @@ const Giphy = () => {
 
 
     useEffect(() => {
-        gifs(ACTIONS.getTrending, rating, 0)
-    }, [rating])
+        gifs(ACTIONS.getSearched, searched, rating)
+    }, [rating, searched])
 
     return (
         <main>
@@ -99,7 +106,7 @@ const Giphy = () => {
                 <div className={classes.imgAtxt}>
                     {
                         state.gifs.map((gif, index) => (
-                            <Box refe={index === state.gifs.length - 5 ? refElement : null} key={index} a={index} src={gif.gifurl} title={gif.title} url={gif.url} />))
+                            <Box refe={index === state.gifs.length - 5 ? refElement : null} key={index} src={gif.gifurl} title={gif.title} url={gif.url} />))
                     }
                 </div>
                 {loading && <p>Loading...</p>}
@@ -108,4 +115,4 @@ const Giphy = () => {
     )
 }
 
-export default Giphy
+export default SearchedGifs

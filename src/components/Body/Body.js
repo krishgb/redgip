@@ -1,12 +1,12 @@
-import { useContext } from 'react'
-import { PageContext } from '../../App'
+// import { useContext } from 'react'
+// import { PageContext } from '..'
 import { Giphy, Reddit } from '..'
 
 import classes from './Body.module.scss'
 
-const Body = () => {
+const Body = ({ page, current }) => {
 
-    const { page, current } = useContext(PageContext)
+    // const { page, current } = useContext(PageContext)
 
     return (
         <main className={classes.main}>

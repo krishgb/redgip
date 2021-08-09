@@ -1,31 +1,47 @@
-import { useState, createContext } from 'react'
-import classes from './App.module.scss'
-import { Header, Body, Footer, GoTop } from './components'
+// import classes from './App.module.scss'
+import { lazy, Suspense } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { GoTop, Footer, Header } from './components'
 
-const page = {
-  giphy: 'giphy',
-  reddit: 'reddit'
-}
-
-export const PageContext = createContext()
+const Giphy = lazy(() => import('./components/Giphy/Giphy'))
+const Reddit = lazy(() => import('./components/Reddit/Reddit'))
+const SearchedGifs = lazy(() => import('./components/SearchedGifs/SearchedGifs'))
 
 const App = () => {
 
-  const [current, setCurrentPage] = useState(page.giphy)
-
-  const changePage = (pg) => setCurrentPage(pg)
-
   return (
-    <div className={classes.app}>
+    <>
+      <Router >
 
-      <PageContext.Provider value={{ page, current }}>
-        <Header changePage={changePage} />
-        <Body />
-      </PageContext.Provider>
+        <Suspense fallback="Loading...">
+
+          <Route exact path='/' >
+            <Header />
+            <Giphy />
+          </Route>
+
+          <Route exact path='/giphy/:a([\w\W]+)' >
+            <Header />
+            <SearchedGifs />
+          </Route>
+
+          <Route exact path='/reddit'>
+            <Header />
+            <Reddit />
+          </Route>
+
+          <Route exact path='/reddit/:a([\w\W]+)'>
+            <Header />
+            <Reddit />
+          </Route>
+
+        </Suspense>
+      </Router>
 
       <Footer />
       <GoTop />
-    </div>)
+    </>
+  )
 }
 
 export default App

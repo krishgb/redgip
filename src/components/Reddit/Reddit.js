@@ -7,17 +7,20 @@ const Reddit = () => {
 
 
     return (
-        <section className={classes.reddit}>
-            <div className={classes.sectionHead}>
-                <div className={classes.logo}>
-                    <Img />
-                </div>
+        <main>
 
-                <div className={classes.search}>
-                    <SearchBar name='reddit' />
+            <section className={classes.reddit}>
+                <div className={classes.sectionHead}>
+                    <div className={classes.logo}>
+                        <Img />
+                    </div>
+
+                    <div className={classes.search}>
+                        <SearchBar name='reddit' />
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </main>
     )
 }
 
